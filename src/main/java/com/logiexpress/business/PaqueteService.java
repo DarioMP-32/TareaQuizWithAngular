@@ -1,18 +1,18 @@
-package com.c5h489.miniproyecto.business;
+package com.logiexpress.business;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.c5h489.miniproyecto.data.ClienteRepository;
-import com.c5h489.miniproyecto.data.PaqueteRepository;
-import com.c5h489.miniproyecto.domain.Cliente;
-import com.c5h489.miniproyecto.domain.EstadoPaquete;
-import com.c5h489.miniproyecto.domain.Paquete;
-import com.c5h489.miniproyecto.exception.ClienteNoEncontradoException;
-import com.c5h489.miniproyecto.exception.PaqueteNoEncontradoException;
-import com.c5h489.miniproyecto.exception.PesoExcedidoException;
+import com.logiexpress.data.ClienteRepository;
+import com.logiexpress.data.PaqueteRepository;
+import com.logiexpress.domain.Cliente;
+import com.logiexpress.domain.EstadoPaquete;
+import com.logiexpress.domain.Paquete;
+import com.logiexpress.exception.ClienteNoEncontradoException;
+import com.logiexpress.exception.PaqueteNoEncontradoException;
+import com.logiexpress.exception.PesoExcedidoException;
 
 @Service
 public class PaqueteService {

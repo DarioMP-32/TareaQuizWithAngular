@@ -1,13 +1,13 @@
-package com.c5h489.miniproyecto;
+package com.logiexpress;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MiniproyectoApplication {
+public class LogiExpressApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MiniproyectoApplication.class, args);
+		SpringApplication.run(LogiExpressApplication.class, args);
 	}
 
 }

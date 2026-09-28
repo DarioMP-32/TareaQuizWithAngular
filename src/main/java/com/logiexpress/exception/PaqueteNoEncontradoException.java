@@ -1,4 +1,4 @@
-package com.c5h489.miniproyecto.exception;
+package com.logiexpress.exception;
 
 public class PaqueteNoEncontradoException extends RuntimeException {
 

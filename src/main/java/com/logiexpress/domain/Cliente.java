@@ -1,4 +1,4 @@
-package com.c5h489.miniproyecto.domain;
+package com.logiexpress.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

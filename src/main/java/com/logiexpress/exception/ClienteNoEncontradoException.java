@@ -1,4 +1,4 @@
-package com.c5h489.miniproyecto.exception;
+package com.logiexpress.exception;
 
 public class ClienteNoEncontradoException extends RuntimeException {
 

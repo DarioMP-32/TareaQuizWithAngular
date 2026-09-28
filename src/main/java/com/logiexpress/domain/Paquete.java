@@ -1,4 +1,4 @@
-package com.c5h489.miniproyecto.domain;
+package com.logiexpress.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -95,11 +95,4 @@ public class Paquete {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-}
-
-enum EstadoPaquete {
-    PENDIENTE,
-    EN_TRANSITO,
-    ENTREGADO,
-    DEVUELTO
 }

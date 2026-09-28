@@ -1,4 +1,4 @@
-package com.c5h489.miniproyecto.domain;
+package com.logiexpress.domain;
 
 public enum EstadoPaquete {
     REGISTRADO,
