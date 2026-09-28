@@ -31,3 +31,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Compilados y binarios ###
+/target/
+*.class
+*.jar
+*.log
+
+### Claves y configuraciones secretas ###
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+application-local.properties
+application-secret.properties
+secrets/
