@@ -11,6 +11,7 @@ import com.logiexpress.domain.Cliente;
 import com.logiexpress.domain.EstadoPaquete;
 import com.logiexpress.domain.Paquete;
 import com.logiexpress.exception.ClienteNoEncontradoException;
+import com.logiexpress.exception.CodigoRastreoDuplicadoException;
 import com.logiexpress.exception.PaqueteNoEncontradoException;
 import com.logiexpress.exception.PesoExcedidoException;
 
@@ -38,6 +39,11 @@ public class PaqueteService {
                 .orElseThrow(() -> new ClienteNoEncontradoException(
                         "No existe un cliente con id " + clienteId));
 
+        if (paqueteRepository.existsByCodigoRastreo(codigoRastreo)) {
+            throw new CodigoRastreoDuplicadoException(
+                    "Ya existe un paquete con el código de rastreo " + codigoRastreo);
+        }
+
         Paquete paquete = new Paquete(codigoRastreo, descripcion, pesoKg, EstadoPaquete.REGISTRADO, cliente);
         return paqueteRepository.save(paquete);
     }
@@ -61,9 +67,14 @@ public class PaqueteService {
 
     @Transactional(readOnly = true)
     public Paquete buscarPorId(Long paqueteId) {
-        return paqueteRepository.findById(paqueteId)
+        return paqueteRepository.findByIdConCliente(paqueteId)
                 .orElseThrow(() -> new PaqueteNoEncontradoException(
                         "No existe un paquete con id " + paqueteId));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Paquete> listarTodos(Pageable pageable) {
+        return paqueteRepository.findAllConCliente(pageable);
     }
 
     @Transactional(readOnly = true)
