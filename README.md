@@ -42,7 +42,11 @@ Las credenciales **nunca** se guardan en el repositorio; se leen de variables de
 | `DB_PASSWORD` | Contraseña de SQL Server | *(vacía)* |
 | `JWT_SECRET` | Clave de firma JWT (mínimo 32 caracteres) | valor de ejemplo, **cámbielo** |
 
-## 3. Ejecución
+## 3. Base de datos
+
+Ejecute `database.sql` en SQL Server (SSMS / Azure Data Studio) para crear la base `ExpresoFastC5H489`, sus tablas y los datos iniciales. Si omite este paso, Hibernate (`ddl-auto=update`) creará las tablas automáticamente, pero la base debe existir.
+
+## 4. Ejecución
 
 ```bash
 # Linux / macOS
@@ -64,7 +68,7 @@ $env:DB_PASSWORD = 'su_contraseña'
 
 También se crea el cliente demo con id `1` (cédula `1-1111-1111`). Las contraseñas se almacenan con **BCrypt**.
 
-## 4. Endpoints
+## 5. Endpoints
 
 | Método | Ruta | Roles permitidos |
 |---|---|---|
@@ -88,7 +92,7 @@ curl -X POST http://localhost:8080/api/v1/paquetes \
   -d '{"clienteId":1,"codigoRastreo":"LX-2026-0001","descripcion":"Caja con documentos","pesoKg":12.5}'
 ```
 
-## 5. Manejo de errores (RFC 7807)
+## 6. Manejo de errores (RFC 7807)
 
 Todos los errores devuelven `application/problem+json` con `type`, `title`, `status`, `detail`, `instance` y `timestamp`:
 
@@ -112,7 +116,7 @@ Todos los errores devuelven `application/problem+json` con `type`, `title`, `sta
 | Sin token / token inválido | 401 |
 | Rol sin permiso | 403 |
 
-## 6. Pruebas
+## 7. Pruebas
 
 ```bash
 ./mvnw test
@@ -120,7 +124,7 @@ Todos los errores devuelven `application/problem+json` con `type`, `title`, `sta
 
 `PaqueteServiceTest` (JUnit 5 + Mockito) verifica el registro exitoso, el rechazo por peso > 30 kg (`assertThrows`) y cliente inexistente. Las pruebas de contexto usan H2 en memoria.
 
-## 7. Flujo de Git
+## 8. Flujo de Git
 
 - Rama principal: `main`.
 - Commits siguiendo *Conventional Commits* (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
