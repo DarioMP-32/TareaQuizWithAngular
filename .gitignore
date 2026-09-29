@@ -48,3 +48,9 @@ build/
 application-local.properties
 application-secret.properties
 secrets/
+
+### Front-end Angular ###
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/out-tsc/
