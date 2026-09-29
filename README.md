@@ -32,7 +32,28 @@ Cliente (SPA / Móvil)  ──HTTP + JSON + JWT──►  controller  ──► 
 4. **Seguridad sin estado:** JWT permite escalar horizontalmente porque el servidor no guarda sesiones.
 5. **Testeabilidad:** el servicio se prueba de forma aislada con Mockito, sin BD ni HTTP.
 
-## 2. Configuración
+## 2. Front-End (Angular 19)
+
+El cliente web vive en la carpeta `frontend/` (SPA en Angular 19) y consume la API a través de HTTP + JWT. Es la prueba del desacoplamiento descrito arriba: el back-end no cambia, solo expone JSON.
+
+```bash
+cd frontend
+npm install
+npm start          # http://localhost:4200  (el back-end debe estar en :8080)
+```
+
+| Concepto Angular | Dónde |
+|---|---|
+| Componentes standalone + lazy loading (`loadComponent`) | `app.routes.ts`, `components/` |
+| Signals (`signal`, `computed`) | `AuthService`, `PaqueteListComponent` |
+| Control de flujo (`@if`, `@for`, `@switch`) | plantillas de los componentes |
+| Interceptor JWT funcional (`HttpInterceptorFn`) | `interceptors/jwt.interceptor.ts` |
+| Guards funcionales (`CanActivateFn`) | `guards/auth.guard.ts` |
+| Pruebas con `TestBed` | archivos `*.spec.ts` |
+
+El back-end habilita CORS para `http://localhost:4200` (variable `CORS_ORIGINS` para cambiarlo).
+
+## 3. Configuración
 
 Las credenciales **nunca** se guardan en el repositorio; se leen de variables de entorno:
 
@@ -42,11 +63,11 @@ Las credenciales **nunca** se guardan en el repositorio; se leen de variables de
 | `DB_PASSWORD` | Contraseña de SQL Server | *(vacía)* |
 | `JWT_SECRET` | Clave de firma JWT (mínimo 32 caracteres) | valor de ejemplo, **cámbielo** |
 
-## 3. Base de datos
+## 4. Base de datos
 
 Ejecute `database.sql` en SQL Server (SSMS / Azure Data Studio) para crear la base `ExpresoFastC5H489`, sus tablas y los datos iniciales. Si omite este paso, Hibernate (`ddl-auto=update`) creará las tablas automáticamente, pero la base debe existir.
 
-## 4. Ejecución
+## 5. Ejecución
 
 ```bash
 # Linux / macOS
@@ -68,7 +89,7 @@ $env:DB_PASSWORD = 'su_contraseña'
 
 También se crea el cliente demo con id `1` (cédula `1-1111-1111`). Las contraseñas se almacenan con **BCrypt**.
 
-## 5. Endpoints
+## 6. Endpoints
 
 | Método | Ruta | Roles permitidos |
 |---|---|---|
@@ -92,7 +113,7 @@ curl -X POST http://localhost:8080/api/v1/paquetes \
   -d '{"clienteId":1,"codigoRastreo":"LX-2026-0001","descripcion":"Caja con documentos","pesoKg":12.5}'
 ```
 
-## 6. Manejo de errores (RFC 7807)
+## 7. Manejo de errores (RFC 7807)
 
 Todos los errores devuelven `application/problem+json` con `type`, `title`, `status`, `detail`, `instance` y `timestamp`:
 
@@ -116,16 +137,16 @@ Todos los errores devuelven `application/problem+json` con `type`, `title`, `sta
 | Sin token / token inválido | 401 |
 | Rol sin permiso | 403 |
 
-## 7. Pruebas
+## 8. Pruebas
 
 ```bash
 ./mvnw test
 ```
 
-`PaqueteServiceTest` (JUnit 5 + Mockito) verifica el registro exitoso, el rechazo por peso > 30 kg (`assertThrows`) y cliente inexistente. Las pruebas de contexto usan H2 en memoria.
+`PaqueteServiceTest` (JUnit 5 + Mockito) verifica el registro exitoso, el rechazo por peso > 30 kg (`assertThrows`) y cliente inexistente. Las pruebas de contexto usan H2 en memoria. Las pruebas del front-end se ejecutan con `npm test` dentro de `frontend/`.
 
-## 8. Flujo de Git
+## 9. Flujo de Git
 
 - Rama principal: `main`.
 - Commits siguiendo *Conventional Commits* (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
-- `feature/security` y `feature/testing` se integraron a `main` mediante `merge --no-ff`.
+- `feature/security`, `feature/testing` y `feature/frontend-angular` se integraron a `main` mediante `merge --no-ff`.
