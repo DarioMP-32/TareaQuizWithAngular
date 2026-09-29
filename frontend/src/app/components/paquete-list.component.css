@@ -1,0 +1,17 @@
+.encabezado { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.acciones { display: flex; align-items: flex-end; gap: .75rem; flex-wrap: wrap; }
+.filtro { display: flex; flex-direction: column; gap: .25rem; font-size: .85rem; color: var(--tinta-suave); }
+.filtro select { min-width: 10rem; }
+.tabla-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th { text-align: left; font-size: .8rem; font-weight: 600; color: var(--tinta-suave); padding: .6rem .75rem; border-bottom: 2px solid var(--linea); }
+td { padding: .7rem .75rem; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+tbody tr:hover { background: var(--fondo-hover); }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.codigo { font-family: ui-monospace, "Cascadia Mono", Consolas, monospace; font-weight: 600; white-space: nowrap; }
+.celda-accion { text-align: right; }
+.chip { display: inline-block; padding: .15rem .6rem; border-radius: 999px; font-size: .8rem; font-weight: 600; }
+.chip-registrado { background: #e4e9ef; color: #3c4b5c; }
+.chip-transito { background: #fdf0d2; color: #7a4d06; }
+.chip-entregado { background: #d9f0e2; color: #17603a; }
+.paginacion { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }

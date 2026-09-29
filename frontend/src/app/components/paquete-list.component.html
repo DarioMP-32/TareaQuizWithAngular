@@ -1,0 +1,82 @@
+<section class="panel">
+  <div class="encabezado">
+    <div>
+      <h1>Paquetes</h1>
+      <p class="ayuda">{{ totalElementos() }} en total con el filtro actual.</p>
+    </div>
+
+    <div class="acciones">
+      <label class="filtro">
+        <span>Estado</span>
+        <select #selEstado (change)="cambiarEstado(selEstado.value)">
+          <option value="">Todos</option>
+          @for (e of estados; track e) {
+            <option [value]="e">{{ e === 'EN_TRANSITO' ? 'En tránsito' : e === 'ENTREGADO' ? 'Entregado' : 'Registrado' }}</option>
+          }
+        </select>
+      </label>
+
+      @if (auth.esAdmin()) {
+        <a class="btn btn-primario" routerLink="/paquetes/nuevo">Registrar paquete</a>
+      }
+    </div>
+  </div>
+
+  @if (error()) {
+    <p class="alerta" role="alert">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="estado-vacio">Cargando paquetes de la API...</p>
+  } @else {
+    <div class="tabla-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Código de rastreo</th>
+            <th>Descripción</th>
+            <th>Cliente</th>
+            <th class="num">Peso</th>
+            <th>Estado</th>
+            @if (auth.esAdmin()) { <th><span class="sr-only">Acciones</span></th> }
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of paquetes(); track item.id) {
+            <tr>
+              <td class="codigo">{{ item.codigoRastreo }}</td>
+              <td>{{ item.descripcion }}</td>
+              <td>{{ item.clienteNombre }}</td>
+              <td class="num">{{ item.pesoKg }} kg</td>
+              <td>
+                @switch (item.estado) {
+                  @case ('REGISTRADO') { <span class="chip chip-registrado">Registrado</span> }
+                  @case ('EN_TRANSITO') { <span class="chip chip-transito">En tránsito</span> }
+                  @case ('ENTREGADO') { <span class="chip chip-entregado">Entregado</span> }
+                }
+              </td>
+              @if (auth.esAdmin()) {
+                <td class="celda-accion">
+                  <button type="button" class="btn btn-peligro" (click)="eliminar(item)">Eliminar</button>
+                </td>
+              }
+            </tr>
+          } @empty {
+            <tr>
+              <td [attr.colspan]="auth.esAdmin() ? 6 : 5" class="estado-vacio">
+                No hay paquetes con este filtro.
+                @if (auth.esAdmin()) { Registre el primero con «Registrar paquete». }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="paginacion">
+      <button type="button" class="btn btn-secundario" [disabled]="!hayAnterior()" (click)="irAPagina(-1)">Anterior</button>
+      <span>Página {{ pagina() + 1 }} de {{ totalPaginas() || 1 }}</span>
+      <button type="button" class="btn btn-secundario" [disabled]="!haySiguiente()" (click)="irAPagina(1)">Siguiente</button>
+    </div>
+  }
+</section>
